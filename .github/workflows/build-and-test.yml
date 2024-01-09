@@ -50,5 +50,4 @@ jobs:
             git diff
             exit 1
           )
-        id: diff
 
