@@ -17,18 +17,36 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    environment: Automation Test
+    environment: Automation_BuildTest
     runs-on: windows-latest # The type of runner that the job will run on
     steps:
     
       - name: Checkout from PR branch
-        uses:  actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Installing node_modules
-        run:  npm install
+      - uses: actions/setup-node@v4
+        name: Install NPM 20
+        with:
+          node-version: 20
+
+      - name: Installing dependencies
+        run: npm ci
         
       - name: Build GitHub Acton
         run: npm run build
+
+      - name: Compare the expected and actual dist/ directories
+        shell: cmd
+        run: |
+          FOR /F "tokens=*" %%C IN ('git diff --ignore-space-at-eol dist/ ^| find /c /v ""') DO set COUNTLINE=%%C
+          echo "%COUNTLINE%"
+          if %COUNTLINE% EQU 0 (
+            echo "Build in dist as expected"
+          ) else (
+            echo "Detected uncommitted changes after build.  See status below:"
+            git diff
+            exit 1
+          )
         
       - name: Run Unit and Functional Tests
         run: npm run test
