@@ -274,7 +274,7 @@ describe('vstest Action Unit Tests', ()=>{
             omitBrokenSymbolicLinks: false
         }
 
-        var globCreationResultMock = when(globCreateMock).calledWith(searchFolder,globOptions).mockReturnThis
+        // var globCreationResultMock = when(globCreateMock).calledWith(searchFolder,globOptions).mockReturnThis
         // var y = when(globCreationResultMock).calledWith().mockReturnValue(rawSearchResults)
 
         // Act
