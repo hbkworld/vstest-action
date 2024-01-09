@@ -34,9 +34,6 @@ jobs:
         
       - name: Build GitHub Acton
         run: npm run build
-        
-      - name: Run Unit and Functional Tests
-        run: npm run test
 
       - name: Compare the expected and actual dist/ directories
         shell: cmd
@@ -50,4 +47,7 @@ jobs:
             git diff
             exit 1
           )
+        
+      - name: Run Unit and Functional Tests
+        run: npm run test
 
